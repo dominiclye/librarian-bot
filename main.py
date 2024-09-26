@@ -17,9 +17,10 @@ intents.message_content = True
 bot = commands.Bot(command_prefix="s?", intents=intents)
 bot.color = 0xffe2e0
 bot.settings_cache = {}
+bot.user_settings_cache = {}
 
 uri = os.getenv("DB_URI")
-defaults = load_json_settings()
+server_defaults = load_json_settings()
 bot.client = motor.motor_asyncio.AsyncIOMotorClient(uri)
 bot.guilds_client = bot.client["study-bot"]
 
@@ -27,12 +28,11 @@ bot.guilds_client = bot.client["study-bot"]
 async def on_ready():
     bot.settings_actions = SettingsActions(bot.guilds_client["guilds"])
     await bot.change_presence(activity=discord.Game(name=f"s?help", type=2))
-    
     for guild in bot.guilds:
         server_settings = await bot.settings_actions.get_guild(guild.id)
         if server_settings is None:
-            await bot.settings_actions.add_guild(guild.id, defaults)
-            bot.settings_cache[guild.id] = defaults
+            await bot.settings_actions.add_guild(guild.id, server_defaults)
+            bot.settings_cache[guild.id] = server_defaults
             print(f"Added {guild.name} to the database with default settings.")
         else:
             bot.settings_cache[guild.id] = server_settings['settings']
@@ -44,8 +44,8 @@ async def on_guild_join(guild):
     server_settings = await bot.settings_actions.get_guild(guild.id)
     
     if server_settings is None:
-        await bot.settings_actions.add_guild(guild.id, defaults)
-        bot.settings_cache[guild.id] = defaults
+        await bot.settings_actions.add_guild(guild.id, server_defaults)
+        bot.settings_cache[guild.id] = server_defaults
         print(f"Added {guild.name} to the database with default settings.")
     else:
         bot.settings_cache[guild.id] = server_settings['settings']
@@ -77,7 +77,7 @@ async def unload(ctx, *, name: str):
         return await ctx.send(e)
     await ctx.send('Unloaded ' + name)
     
-cogs = ["cogs.VoiceCommands", "cogs.SettingsCommands", "cogs.ErrorHandling"]
+cogs = ["cogs.VoiceCommands", "cogs.SettingsCommands", "cogs.ErrorHandling", "cogs.ProductivityCommands"]
 
 async def setup(bot):
     for cog in cogs:

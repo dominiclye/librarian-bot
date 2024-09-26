@@ -29,3 +29,19 @@ class SettingsActions:
             {"$set": {f"settings.{setting_key}": setting_value}},
             upsert=True  
         )
+    
+    async def add_user(self, user_id, settings):
+        await self.db.insert_one({
+            "user_id": user_id, 
+            "settings": settings
+            })
+
+    async def update_user_settings(self, user_id, setting_key, setting_value):
+        return await self.db.update_one(
+            {"user_id": user_id},
+            {"$set": {f"settings.{setting_key}": setting_value}},
+            upsert=True
+        )
+    
+    async def get_user(self, user_id):
+        return await self.db.find_one({"user_id": user_id})
