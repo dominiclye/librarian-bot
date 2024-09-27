@@ -3,38 +3,31 @@
 <details>
   <summary>⚙️ Settings</summary>
   
-  `setcolor <color>`
-  Changes the bot embed colour.
+  `setcolor <color>` → Changes the bot embed colour.
 
 </details>
 
 <details>
   <summary>🎤 Voice</summary>
   
-  `jtc`  
-  Sets the join to create channel.
+  `jtc` → Sets the join to create channel.
 
 </details>
 
 <details>
   <summary>🧠 Productivity</summary>
-
-  `pomodoro <study time> <break time> <cycles>`
-  Starts a pomodoro timer
-
-  `endstudy`
-  Ends the pomodoro timer
   
-  `goals`  
-  Lists a user's goals.
 
-  `add_goal <str>`  
-  Adds a goal to user goals.
+  `pomodoro <study time> <break time> <cycles>` → Starts a pomodoro timer
 
-  `goal_status <str>`  
-  Updates the status of a goal.
+  `endstudy` → Ends the pomodoro timer
+  
+  `goals` → Lists a user's goals.
 
-  `remove_goal <index>`  
-  Removes a goal from user goals.
+  `add_goal <str>` → Adds a goal to user goals.
+
+  `goal_status <str>` → Updates the status of a goal.
+
+  `remove_goal <index>` → Removes a goal from user goals.
 
 </details>
