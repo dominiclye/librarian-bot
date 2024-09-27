@@ -18,11 +18,23 @@
 
 <details>
   <summary>🧠 Productivity</summary>
+
+  `pomodoro <study time> <break time> <cycles>`  
+  Starts a pomodoro timer
+
+  `endstudy`
+  Ends the pomodoro timer
   
   `goals`  
   Lists a user's goals.
 
   `add_goal <str>`  
   Adds a goal to user goals.
+
+  `goal_status <str>`  
+  Updates the status of a goal.
+
+  `remove_goal <index>`  
+  Removes a goal from user goals.
 
 </details>
