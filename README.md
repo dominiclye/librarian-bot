@@ -19,7 +19,7 @@
 <details>
   <summary>🧠 Productivity</summary>
 
-  `pomodoro <study time> <break time> <cycles>`  
+  `pomodoro <study time> <break time> <cycles>`
   Starts a pomodoro timer
 
   `endstudy`
