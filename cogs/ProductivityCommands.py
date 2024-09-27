@@ -134,22 +134,35 @@ class Productivity(commands.Cog):
     async def pomodoro(self, ctx, study_time:int, break_time:int, cycles:int):
         user_id = ctx.author.id
         self.active_timers[user_id] = True
-        study_embed = discord.Embed(title="Pomodoro Timer", color=self.bot.settings_cache[ctx.guild.id]['color'], description="It's time to start studying again")
-        study_embed.add_field(name="Study Time", value=f"`{study_time} minutes`")
+
+        remaining_study_time = study_time
+        remaining_break_time = break_time
+
+        study_embed = discord.Embed(title="Pomodoro Timer", color=self.bot.settings_cache[ctx.guild.id]['color'], description="It's time to start studying")
+        study_embed.add_field(name="Study Time", value=f"`{remaining_study_time} minutes`")
 
         rest_embed = discord.Embed(title="Pomodoro Timer", color=self.bot.settings_cache[ctx.guild.id]['color'], description="You've earned a quick break")
-        rest_embed.add_field(name="Break Time", value=f"`{break_time} minutes`")
+        rest_embed.add_field(name="Break Time", value=f"`{remaining_break_time} minutes`")
 
 
+        message = await ctx.reply(embed=study_embed)
         for i in range(cycles):
-            if self.active_timers[user_id] == False:
-                break
-            await ctx.reply(embed=study_embed)
-            await asyncio.sleep(study_time*60)
-            if self.active_timers[user_id] == False:
-                break
-            await ctx.reply(embed=rest_embed)
-            await asyncio.sleep(break_time*60)
+            for i in range(study_time):
+                await asyncio.sleep(60)
+                remaining_study_time -= 1
+                study_embed.set_field_at(0, name="Study Time", value=f"`{remaining_study_time} minutes`")
+                await message.edit(embed=study_embed)
+            for i in range(break_time):
+                if i == 0:
+                    break_message = await ctx.reply(embed=rest_embed)
+                else:
+                    rest_embed.set_field_at(0, name="Break Time", value=f"`{remaining_break_time} minutes`")
+                    await break_message.edit(embed=rest_embed)
+                await asyncio.sleep(60)
+                remaining_break_time -= 1
+            remaining_study_time = study_time
+            remaining_break_time = break_time
+
 
     @commands.command()
     async def endstudy(self, ctx):
