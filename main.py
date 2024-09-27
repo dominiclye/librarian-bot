@@ -40,6 +40,7 @@ async def on_ready():
     
     await setup(bot)
 
+@bot.event
 async def on_guild_join(guild):
     server_settings = await bot.settings_actions.get_guild(guild.id)
     
