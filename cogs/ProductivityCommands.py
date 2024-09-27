@@ -129,5 +129,9 @@ class Productivity(commands.Cog):
     
         await ctx.reply(embed=embed)
 
+    @commands.command()
+    async def pomodoro(self, ctx, study_time:int, break_time:int):
+        
+
 async def setup(bot):
     await bot.add_cog(Productivity(bot))
