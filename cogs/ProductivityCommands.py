@@ -153,15 +153,14 @@ class Productivity(commands.Cog):
                 study_embed.set_field_at(0, name="Study Time", value=f"`{remaining_study_time} minutes`")
                 await message.edit(embed=study_embed)
             for i in range(break_time):
-                if i == 0:
-                    break_message = await ctx.reply(embed=rest_embed)
-                else:
-                    rest_embed.set_field_at(0, name="Break Time", value=f"`{remaining_break_time} minutes`")
-                    await break_message.edit(embed=rest_embed)
+                rest_embed.set_field_at(0, name="Break Time", value=f"`{remaining_break_time} minutes`")
+                await message.edit(embed=rest_embed)
                 await asyncio.sleep(60)
                 remaining_break_time -= 1
             remaining_study_time = study_time
             remaining_break_time = break_time
+        
+        await message.delete()
 
 
     @commands.command()
