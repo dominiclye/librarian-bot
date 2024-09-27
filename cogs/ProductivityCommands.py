@@ -2,13 +2,14 @@ from discord.ext import commands
 import discord
 from dbActions.SettingsActions import SettingsActions
 from utils.config import load_user_json_settings
-
+import asyncio
 
 class Productivity(commands.Cog):
     def __init__(self, bot):
         self.bot=bot
         self.settings_actions = SettingsActions(bot.guilds_client["users"])
         self.user_defaults = load_user_json_settings()
+        self.active_timers = {}
     
     @commands.command()
     async def goals(self, ctx):
@@ -130,8 +131,36 @@ class Productivity(commands.Cog):
         await ctx.reply(embed=embed)
 
     @commands.command()
-    async def pomodoro(self, ctx, study_time:int, break_time:int):
-        
+    async def pomodoro(self, ctx, study_time:int, break_time:int, cycles:int):
+        user_id = ctx.author.id
+        self.active_timers[user_id] = True
+        study_embed = discord.Embed(title="Pomodoro Timer", color=self.bot.settings_cache[ctx.guild.id]['color'], description="It's time to start studying again")
+        study_embed.add_field(name="Study Time", value=f"`{study_time} minutes`")
+
+        rest_embed = discord.Embed(title="Pomodoro Timer", color=self.bot.settings_cache[ctx.guild.id]['color'], description="You've earned a quick break")
+        rest_embed.add_field(name="Break Time", value=f"`{break_time} minutes`")
+
+
+        for i in range(cycles):
+            if self.active_timers[user_id] == False:
+                break
+            await ctx.reply(embed=study_embed)
+            await asyncio.sleep(study_time*60)
+            if self.active_timers[user_id] == False:
+                break
+            await ctx.reply(embed=rest_embed)
+            await asyncio.sleep(break_time*60)
+
+    @commands.command()
+    async def endstudy(self, ctx):
+        user_id = ctx.author.id
+        self.active_timers[user_id] = False
+        embed = discord.Embed(title="Pomodoro Timer", color=self.bot.settings_cache[ctx.guild.id]['color'], description="Your pomodoro timer has ended")
+        await ctx.reply(embed=embed)
+
+
+
+
 
 async def setup(bot):
     await bot.add_cog(Productivity(bot))
