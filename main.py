@@ -78,7 +78,7 @@ async def unload(ctx, *, name: str):
         return await ctx.send(e)
     await ctx.send('Unloaded ' + name)
     
-cogs = ["cogs.VoiceCommands", "cogs.SettingsCommands", "cogs.ErrorHandling", "cogs.ProductivityCommands"]
+cogs = ["cogs.VoiceCommands", "cogs.SettingsCommands", "cogs.ErrorHandling", "cogs.ProductivityCommands", "cogs.SocialCommands"]
 
 async def setup(bot):
     for cog in cogs:

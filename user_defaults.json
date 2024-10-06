@@ -1,5 +1,11 @@
 {
     "goals": [],
     "to-do": [],
+    "bio": {
+        "name": "This user has not set a name",
+        "interests": "This user has not set any interests",
+        "education": "This user has not set an education",
+        "goals": "This user has not set any goals"
+    },
     "timezone": ""
 }
