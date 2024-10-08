@@ -31,3 +31,14 @@
   `remove_goal <index>` → Removes a goal from user goals.
 
 </details>
+
+<details>
+  <summary>💁‍♂️ Social</summary>
+  
+
+  `bio <@user>` → Displays a user's bio
+
+  `editbio <field> <value>` → Edit a field in your bio
+
+
+</details>
