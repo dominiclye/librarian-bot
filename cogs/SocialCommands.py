@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from dbActions.SettingsActions import SettingsActions
 from utils.config import load_user_json_settings
+from requests import get
 
 class Social(commands.Cog):
     def __init__(self, bot):
@@ -60,6 +61,8 @@ class Social(commands.Cog):
         embed.add_field(name=field, value=f"`{value}`")
 
         await ctx.reply(embed=embed)
+
+
 
 async def setup(bot):
     await bot.add_cog(Social(bot))

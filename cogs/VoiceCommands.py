@@ -30,7 +30,14 @@ class Voice(commands.Cog):
         
         if before.channel is None and after.channel and str(after.channel.id) == str(jtc):
             guild = member.guild
-            channel = await guild.create_voice_channel(name=f"{member.display_name}'s Channel")
+            
+            jtc_channel = guild.get_channel(int(jtc))
+            category = jtc_channel.category 
+            
+            channel = await guild.create_voice_channel(
+                name=f"{member.display_name}'s Channel", 
+                category=category
+            )
             await member.move_to(channel)
             
             if guild.id not in self.temp_channels:
